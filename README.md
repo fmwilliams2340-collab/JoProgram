@@ -1,21 +1,16 @@
 # Jo's Program V3 Complete
 
-Upload every file and folder in this ZIP to the root of the GitHub Pages repository.
+Upload all files and folders in this extracted folder to the root of the existing GitHub Pages repository.
 
-Core features included:
-- iPhone-style Progressive Web App layout
-- Monday, Tuesday, Thursday, and Friday workout sessions
-- True set-by-set tracking for weight, reps, and set completion
-- Autosave to the phone/browser using localStorage
-- Previous workout history by exercise
-- Large Email Today's Workout buttons at top and bottom of each workout
-- Finish Workout save flow
-- Print / Save as PDF using the browser print function
-- Weekly report screen
-- Exercise detail drawer with image, video link, coaching cues, common mistakes, alternatives, and Matt's Tip
-- Offline-ready service worker
+Key features included:
+- professional mobile PWA structure
+- set-by-set weight/reps tracking
+- previous workout history stored on device
+- daily notes and knee/energy wellness fields
+- large Email Workout buttons on every workout day
+- Finish Workout flow
+- printable/PDF-friendly workout and weekly report views
+- exercise details with images, tips, common mistakes, alternatives, and Matt's Tips
+- offline support through service worker
 
-After uploading, wait for GitHub Pages deployment, then open:
-https://fmwilliams2340-collab.github.io/JoProgram/
-
-If the old app appears, clear browser/site data or unregister the old service worker.
+After upload, wait for GitHub Pages deployment, then open the existing URL.
