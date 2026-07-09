@@ -1,14 +1,27 @@
-# Jo's Program v2.3 - Set-by-Set Tracking
+# Jo's Program v3.0 - Clean Build
 
-Upload all files in this folder to the root of the JoProgram GitHub repository.
+Upload all files in this folder to the root of the existing `JoProgram` GitHub repository.
 
-This version is visibly labeled Version 2.3 and includes per-set tracking for each exercise:
+This version is a cleaner, maintainable app structure:
 
-- Set 1 weight / reps / done
-- Set 2 weight / reps / done
-- Set 3 weight / reps / done
-- Additional set rows based on the prescribed set count
-- Previous workout set history
-- Email workout summaries that include all set rows
+- `index.html` - app shell
+- `styles.css` - professional iPhone-style interface
+- `data.js` - workout and exercise content
+- `app.js` - tracking, history, email, print/PDF, weekly report logic
+- `manifest.json` - iPhone/PWA install settings
+- `service-worker.js` - offline cache and update handling
 
-Service worker cache: jos-program-v24.
+## Major features
+
+- true set-by-set tracking for every exercise
+- automatic previous workout history
+- large Email Workout buttons on each workout day
+- Finish Workout flow
+- PDF/print workout summaries
+- weekly report email
+- exercise image gallery-style cards
+- optional demonstration video slots
+- coaching cues, common mistakes, alternatives, and Matt's Tips
+- better cache versioning: `jos-program-v3-0-clean-build`
+
+After upload, wait for GitHub Pages deployment and then hard refresh the app once.
