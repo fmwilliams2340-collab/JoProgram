@@ -1,7 +1,10 @@
-# Jo's Program v2.1
+# Jo's Program v2.2
 
-Upload all files in this folder to the root of the existing GitHub Pages repository.
+GitHub Pages package. Upload these files to the root of the JoProgram repository.
 
-Version 2.1 updates Friday's workout and adds expanded exercise detail panels with optional video search, coaching cues, common mistakes, alternatives, Matt's Tip, previous workout values, and very prominent Email Workout buttons.
-
-After upload, wait for GitHub Pages to deploy, then refresh the iPhone app. If the old version remains, clear Safari website data for github.io or use the Update Now banner if it appears.
+## v2.2 updates
+- Tracks each exercise set individually.
+- Set 1, Set 2, Set 3, etc. each have separate weight, reps, and done fields.
+- Email workout summary includes set-by-set entries.
+- Finish Workout saves set-by-set history and previous workout values.
+- Service worker cache bumped to v22.
