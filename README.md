@@ -1,14 +1,14 @@
-# Jo's Program - Version 2.2.1
+# Jo's Program v2.3 - Set-by-Set Tracking
 
-Upload all files in this folder to the root of the existing GitHub Pages repository.
+Upload all files in this folder to the root of the JoProgram GitHub repository.
 
-This version forces a cache refresh (service worker cache v23) and includes set-by-set logging for each exercise:
+This version is visibly labeled Version 2.3 and includes per-set tracking for each exercise:
 
-- Set 1 Weight / Reps / Done
-- Set 2 Weight / Reps / Done
-- Set 3 Weight / Reps / Done
-- Additional set rows when the prescribed workout uses 4 or 5 sets
+- Set 1 weight / reps / done
+- Set 2 weight / reps / done
+- Set 3 weight / reps / done
+- Additional set rows based on the prescribed set count
 - Previous workout set history
-- Email workout summary with set-by-set detail
+- Email workout summaries that include all set rows
 
-If the old single Weight/Reps fields still appear after upload, unregister the old service worker or clear site data for the GitHub Pages site, then reload.
+Service worker cache: jos-program-v24.
