@@ -597,6 +597,27 @@
       font-size: 12px;
       font-weight: 800;
     }
+    .email-workout-btn {
+      appearance: none;
+      border: 0;
+      border-radius: 16px;
+      padding: 13px 14px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(20,31,52,.13);
+      width: 100%;
+      margin-top: 4px;
+    }
+    .email-workout-btn:active { transform: translateY(1px); }
+    .email-help {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 750;
+    }
 
     .two-col {
       display: grid;
@@ -1069,6 +1090,7 @@ function render(dayId){
   wireChecks(dayId);
   wireGraphics();
   wireWorkoutLogs();
+  wireEmailButton();
   window.scrollTo({top: 0, behavior: "smooth"});
 }
 
@@ -1122,12 +1144,15 @@ function exerciseLogFields(dayId, idx, name){
 
 function dailyLogSection(d){
   const notesKey = `jos.notes.${d.id}`;
+  const statusText = d.recovery ? 'Notes save automatically on this device.' : 'Weight, reps, and notes save automatically on this device.';
   return `<section class="section">
-    <div class="section-title"><h3>Daily Notes</h3><span class="hint">Auto-saves on this phone</span></div>
+    <div class="section-title"><h3>Daily Log</h3><span class="hint">Auto-saves on this phone</span></div>
     <div class="daily-notes">
       <label for="${notesKey}">How did it feel? Knee, energy, wins, changes for next time</label>
       <textarea id="${notesKey}" data-log-key="${notesKey}" placeholder="Example: Knee felt good. Used lighter weight on leg press. Energy was strong today."></textarea>
-      <div class="save-status" id="saveStatus">Weight, reps, and notes save automatically on this device.</div>
+      <button class="email-workout-btn" type="button" id="emailWorkoutBtn">Email Today's Workout</button>
+      <div class="email-help">Opens the iPhone Mail app with today’s workout summary already filled in. Jo can review it, add a recipient, and tap Send.</div>
+      <div class="save-status" id="saveStatus">${statusText}</div>
     </div>
   </section>`;
 }
@@ -1207,6 +1232,60 @@ function showSaveStatus(){
       ? 'Notes save automatically on this device.'
       : 'Weight, reps, and notes save automatically on this device.';
   }, 1200);
+}
+
+function wireEmailButton(){
+  const btn = document.getElementById('emailWorkoutBtn');
+  if (!btn) return;
+  btn.addEventListener('click', emailDailyWorkout);
+}
+
+function emailDailyWorkout(){
+  const summary = buildWorkoutEmailSummary();
+  const subject = encodeURIComponent(summary.subject);
+  const body = encodeURIComponent(summary.body);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
+function buildWorkoutEmailSummary(){
+  const d = program.find(x => x.id === currentDay) || program[0];
+  const today = new Date().toLocaleDateString(undefined, {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  const lines = [];
+  lines.push(`Jo's Program - ${d.day}: ${d.subtitle}`);
+  lines.push(`Date: ${today}`);
+  lines.push('');
+
+  if (d.exercises && d.exercises.length) {
+    lines.push('Workout Inputs');
+    d.exercises.forEach((ex, idx) => {
+      const done = localStorage.getItem(`jos.check.${d.id}.${idx}`) === '1' ? 'Yes' : 'No';
+      const weight = localStorage.getItem(`jos.log.${d.id}.${idx}.weight`) || '';
+      const reps = localStorage.getItem(`jos.log.${d.id}.${idx}.actualReps`) || '';
+      lines.push(`${idx + 1}. ${ex.name}`);
+      lines.push(`   Planned: ${ex.sets} sets x ${ex.reps}`);
+      lines.push(`   Completed: ${done}`);
+      lines.push(`   Weight Used: ${weight || 'not entered'}`);
+      lines.push(`   Reps Completed: ${reps || 'not entered'}`);
+    });
+    lines.push('');
+  } else if (d.recovery && d.recovery.length) {
+    lines.push('Recovery / Mobility');
+    d.recovery.forEach((r, idx) => {
+      lines.push(`${idx + 1}. ${r.name} - ${r.time}`);
+    });
+    lines.push('');
+  }
+
+  const notes = localStorage.getItem(`jos.notes.${d.id}`) || '';
+  lines.push('Daily Notes');
+  lines.push(notes || 'No notes entered.');
+  lines.push('');
+  lines.push('Sent from Jo's Program.');
+
+  return {
+    subject: `Jo's Program - ${d.day} Workout Log`,
+    body: lines.join('\n')
+  };
 }
 
 function openGraphicModal(kind, label){
