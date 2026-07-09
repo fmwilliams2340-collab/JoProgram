@@ -1,13 +1,13 @@
 {
   "name": "Jo's Program",
   "short_name": "Jo's Program",
-  "description": "Strength, health, and longevity workout program.",
-  "start_url": "./index.html",
+  "description": "Jo's Program Version 2.0 workout tracker with daily notes, history, and email summaries.",
+  "start_url": "./index.html?v=20",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f7f4ee",
-  "theme_color": "#12315f",
+  "theme_color": "#102a52",
   "icons": [
     {
       "src": "icon-192.png",

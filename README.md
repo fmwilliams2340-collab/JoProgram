@@ -1,17 +1,16 @@
-# Jo's Program - GitHub Pages Upload
+# Jo's Program Version 2.0
 
-Upload the contents of this folder to the existing `JoProgram` GitHub repository.
+Upload all files in this folder to the root of the existing GitHub Pages repository.
 
-This version adds workout logging fields:
+Version 2.0 includes:
+- modern dashboard
+- daily workout tabs
+- weight and reps tracking for every exercise
+- daily notes
+- finish workout button
+- workout history saved on the phone
+- last workout values shown for each exercise
+- email today's workout button
+- service worker cache bumped to jos-program-v20
 
-- Weight used for each exercise
-- Reps completed for each exercise
-- Daily notes for each workout day
-- Auto-save to the phone/browser using local storage
-
-For GitHub Pages, `index.html` must remain at the root of the repository.
-
-After upload, refresh the iPhone app/page. If the old version appears, close Safari/app, reopen it, or refresh the page once so the updated service worker cache is used.
-
-
-Version 3 adds an Email Today's Workout button that opens the user's email client with the workout log pre-filled.
+After upload, open the GitHub Pages site and refresh. If the old app appears, clear site data once, then reload.
