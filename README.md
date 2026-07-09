@@ -1,5 +1,14 @@
 # Jo's Program - GitHub Pages Upload
 
-Upload the contents of this folder to a GitHub repository. For GitHub Pages, the file must be named `index.html` at the root of the repository.
+Upload the contents of this folder to the existing `JoProgram` GitHub repository.
 
-After publishing, open the GitHub Pages URL on Jo's iPhone in Safari, tap Share, then Add to Home Screen.
+This version adds workout logging fields:
+
+- Weight used for each exercise
+- Reps completed for each exercise
+- Daily notes for each workout day
+- Auto-save to the phone/browser using local storage
+
+For GitHub Pages, `index.html` must remain at the root of the repository.
+
+After upload, refresh the iPhone app/page. If the old version appears, close Safari/app, reopen it, or refresh the page once so the updated service worker cache is used.

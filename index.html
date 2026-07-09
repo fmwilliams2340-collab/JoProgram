@@ -547,6 +547,56 @@
       font-size: 13px;
       line-height: 1.34;
     }
+    .log-panel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--accent) 4%, #fff);
+    }
+    .log-field {
+      display: grid;
+      gap: 5px;
+    }
+    .log-field label, .daily-notes label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .log-input, .daily-notes textarea {
+      width: 100%;
+      border: 1px solid rgba(20,31,52,.16);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 15px;
+      padding: 10px 11px;
+      outline: none;
+    }
+    .log-input:focus, .daily-notes textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+    }
+    .daily-notes {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .daily-notes textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .save-status {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
 
     .two-col {
       display: grid;
@@ -1011,12 +1061,14 @@ function render(dayId){
 
     ${warmupSection(d)}
     ${d.recovery ? recoverySection(d) : exercisesSection(d)}
+    ${dailyLogSection(d)}
     ${cooldownSection(d)}
     ${notesSection(d)}
     ${safetySection(d)}
   `;
   wireChecks(dayId);
   wireGraphics();
+  wireWorkoutLogs();
   window.scrollTo({top: 0, behavior: "smooth"});
 }
 
@@ -1048,8 +1100,36 @@ function exerciseCard(dayId, ex, idx){
       </div>
       <ul class="cues">${ex.cues.map(c => `<li>${escapeHtml(c)}</li>`).join("")}</ul>
       ${ex.note ? `<div class="exercise-note">${escapeHtml(ex.note)}</div>` : ""}
+      ${exerciseLogFields(dayId, idx, ex.name)}
     </div>
   </article>`;
+}
+
+function exerciseLogFields(dayId, idx, name){
+  const weightKey = `jos.log.${dayId}.${idx}.weight`;
+  const repsKey = `jos.log.${dayId}.${idx}.actualReps`;
+  return `<div class="log-panel" aria-label="Workout log for ${escapeHtml(name)}">
+    <div class="log-field">
+      <label for="${weightKey}">Weight Used</label>
+      <input class="log-input" id="${weightKey}" data-log-key="${weightKey}" type="text" inputmode="decimal" placeholder="ex: 20 lb, 45 lb" />
+    </div>
+    <div class="log-field">
+      <label for="${repsKey}">Reps Completed</label>
+      <input class="log-input" id="${repsKey}" data-log-key="${repsKey}" type="text" inputmode="numeric" placeholder="ex: 10, 10, 8" />
+    </div>
+  </div>`;
+}
+
+function dailyLogSection(d){
+  const notesKey = `jos.notes.${d.id}`;
+  return `<section class="section">
+    <div class="section-title"><h3>Daily Notes</h3><span class="hint">Auto-saves on this phone</span></div>
+    <div class="daily-notes">
+      <label for="${notesKey}">How did it feel? Knee, energy, wins, changes for next time</label>
+      <textarea id="${notesKey}" data-log-key="${notesKey}" placeholder="Example: Knee felt good. Used lighter weight on leg press. Energy was strong today."></textarea>
+      <div class="save-status" id="saveStatus">Weight, reps, and notes save automatically on this device.</div>
+    </div>
+  </section>`;
 }
 
 function recoverySection(d){
@@ -1102,6 +1182,31 @@ function wireGraphics(){
   document.querySelectorAll('.graphic-wrap[data-graphic]').forEach(btn => {
     btn.addEventListener('click', () => openGraphicModal(btn.dataset.graphic, btn.dataset.label));
   });
+}
+
+function wireWorkoutLogs(){
+  document.querySelectorAll('[data-log-key]').forEach(field => {
+    const key = field.dataset.logKey;
+    field.value = localStorage.getItem(key) || "";
+    field.addEventListener('input', () => {
+      localStorage.setItem(key, field.value);
+      showSaveStatus();
+    });
+  });
+}
+
+let saveStatusTimer;
+function showSaveStatus(){
+  const status = document.getElementById('saveStatus');
+  if (!status) return;
+  status.textContent = 'Saved on this phone.';
+  clearTimeout(saveStatusTimer);
+  saveStatusTimer = setTimeout(() => {
+    const current = program.find(x => x.id === currentDay);
+    status.textContent = current && current.recovery
+      ? 'Notes save automatically on this device.'
+      : 'Weight, reps, and notes save automatically on this device.';
+  }, 1200);
 }
 
 function openGraphicModal(kind, label){
