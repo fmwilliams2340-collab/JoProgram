@@ -1,61 +1,595 @@
-const PROGRAM_VERSION = '3.0';
-const WORKOUTS = {
-  monday: {
-    label: 'Monday', title: 'Upper Body', subtitle: 'Strength, posture, and confidence', theme: 'Upper',
-    warmup: ['5 minutes treadmill walk or Concept2 row', 'Shoulder circles x 10 each way', 'Light band pull-aparts x 12', 'One easy warm-up set on first press and first row'],
-    cooldown: ['10 minutes treadmill walk or Concept2 row', 'Easy pec and lat stretch if desired'],
-    exercises: [
-      {id:'m_chest_press', name:'Plate-Loaded Chest Press', sets:3, reps:'8-12', type:'press', sub:'Stable machine press', cues:['Adjust seat so handles line up mid-chest.','Keep shoulders down and back.','Press smoothly and return under control.'], mistakes:['Do not bounce the handles.','Do not let shoulders shrug.','Do not lock elbows aggressively.'], alternatives:['Machine Chest Press','Smith Machine Bench Press','Dumbbell Bench Press'], tip:'Smooth, controlled reps beat heavy weight every time. Leave one or two reps in the tank.'},
-      {id:'m_chest_supported_row', name:'Chest-Supported Row', sets:3, reps:'10-12', type:'row', sub:'Back support, low balance demand', cues:['Set chest pad firmly.','Pull elbows back, not up.','Pause briefly at the squeeze.'], mistakes:['Do not jerk from the low back.','Do not let the neck crane forward.'], alternatives:['Seated Machine Row','One-Arm Dumbbell Row','Cable Row if available'], tip:'This is posture work. Pull with control and finish tall.'},
-      {id:'m_shoulder_press', name:'Machine Shoulder Press', sets:2, reps:'8-10', type:'press', sub:'Controlled overhead work', cues:['Use a neutral grip if available.','Stop if shoulder pinches.','Lower slowly.'], mistakes:['Do not arch the back hard.','Do not force painful range.'], alternatives:['Seated Dumbbell Press','Landmine Press','Incline Press'], tip:'Shoulders like control. Quality reps first.'},
-      {id:'m_lat_pulldown', name:'Lat Pulldown', sets:3, reps:'10-12', type:'pulldown', sub:'Upper back and lats', cues:['Pull bar toward upper chest.','Keep ribs down.','Let arms stretch at the top.'], mistakes:['Do not pull behind the neck.','Do not swing backward.'], alternatives:['Assisted Pull-up Machine','Machine High Row','Band Pulldown'], tip:'Think elbows down to your pockets.'},
-      {id:'m_machine_curl', name:'Machine Biceps Curl', sets:2, reps:'10-12', type:'curl', sub:'Arm strength', cues:['Keep elbows planted.','Curl without rocking.','Lower under control.'], mistakes:['Do not rush the lower.','Do not lift shoulders.'], alternatives:['Dumbbell Curl','EZ-Bar Curl','Cable Curl'], tip:'Use a weight you can own for every rep.'},
-      {id:'m_triceps_pressdown', name:'Rope Triceps Pressdown', sets:2, reps:'10-12', type:'triceps', sub:'Arm strength', cues:['Elbows stay close.','Press down and slightly out.','Control the return.'], mistakes:['Do not lean on the rope.','Do not flare elbows.'], alternatives:['Machine Triceps Extension','Bench Dip Assist Machine','Band Pressdown'], tip:'Lock in the elbows and move only the forearms.'}
+{
+  "monday": {
+    "title": "Monday",
+    "subtitle": "Upper Body",
+    "focus": "Strength, posture, and upper-body muscle",
+    "warmup": [
+      "5 minutes treadmill walk or easy row",
+      "Shoulder circles x 10 each way",
+      "Light machine chest press x 12",
+      "Light supported row x 12"
+    ],
+    "cooldown": [
+      "10 minutes treadmill walk or Concept2 row"
+    ],
+    "exercises": [
+      {
+        "id": "plate_chest_press",
+        "name": "Plate Loaded Chest Press",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Keep shoulder blades back. Smooth reps beat heavy reps.",
+        "mistakes": [
+          "Letting shoulders roll forward",
+          "Bouncing the handles",
+          "Locking elbows hard"
+        ],
+        "alternatives": [
+          "Machine chest press",
+          "Smith machine bench press",
+          "Dumbbell bench press"
+        ],
+        "cues": [
+          "Set seat so handles meet mid-chest",
+          "Press under control",
+          "Stop 1-2 reps before form breaks"
+        ]
+      },
+      {
+        "id": "chest_supported_row",
+        "name": "Chest-Supported Row",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Pull with the elbows, not the hands.",
+        "mistakes": [
+          "Shrugging shoulders",
+          "Jerking the weight",
+          "Lifting chest off pad"
+        ],
+        "alternatives": [
+          "Seated row machine",
+          "One-arm dumbbell row",
+          "Cable row if available"
+        ],
+        "cues": [
+          "Chest stays on pad",
+          "Pause briefly at the squeeze",
+          "Lower slowly"
+        ]
+      },
+      {
+        "id": "lat_pulldown",
+        "name": "Lat Pulldown",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Think chest tall and elbows down.",
+        "mistakes": [
+          "Pulling behind the neck",
+          "Rocking backward",
+          "Using too much weight"
+        ],
+        "alternatives": [
+          "Assisted pullup machine",
+          "Neutral-grip pulldown",
+          "Machine high row"
+        ],
+        "cues": [
+          "Grip just outside shoulders",
+          "Pull bar to upper chest",
+          "Control the return"
+        ]
+      },
+      {
+        "id": "machine_shoulder_press",
+        "name": "Machine Shoulder Press",
+        "sets": 2,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Use a pain-free range and keep it controlled.",
+        "mistakes": [
+          "Arching low back",
+          "Pressing through pain",
+          "Dropping too fast"
+        ],
+        "alternatives": [
+          "Seated dumbbell press",
+          "Landmine press",
+          "Incline press machine"
+        ],
+        "cues": [
+          "Brace gently",
+          "Press smoothly",
+          "Stop short of painful range"
+        ]
+      },
+      {
+        "id": "machine_curl",
+        "name": "Machine Biceps Curl",
+        "sets": 2,
+        "repRange": "10-12",
+        "type": "Accessory",
+        "tip": "Slow reps make light weight productive.",
+        "mistakes": [
+          "Swinging",
+          "Letting elbows drift",
+          "Dropping weight"
+        ],
+        "alternatives": [
+          "Dumbbell curl",
+          "Cable curl",
+          "EZ-bar curl"
+        ],
+        "cues": [
+          "Elbows planted",
+          "Curl and squeeze",
+          "Lower under control"
+        ]
+      },
+      {
+        "id": "triceps_pressdown",
+        "name": "Triceps Pressdown",
+        "sets": 2,
+        "repRange": "10-12",
+        "type": "Accessory",
+        "tip": "Keep elbows pinned and finish the rep.",
+        "mistakes": [
+          "Moving shoulders",
+          "Leaning too far",
+          "Snapping elbows"
+        ],
+        "alternatives": [
+          "Machine triceps extension",
+          "Overhead rope extension",
+          "Close-grip press machine"
+        ],
+        "cues": [
+          "Elbows by ribs",
+          "Press down to full extension",
+          "Return slowly"
+        ]
+      }
     ]
   },
-  tuesday: {
-    label: 'Tuesday', title: 'Lower Body - Knee Friendly', subtitle: 'Strength without unnecessary risk', theme: 'Lower',
-    warmup: ['5 minutes treadmill walk', 'Bodyweight sit-to-stand x 10', 'Heel raises x 15', 'Mini squats x 10 in comfortable range'],
-    cooldown: ['10 minutes treadmill walk or Concept2 row', 'Keep pace comfortable and easy'],
-    exercises: [
-      {id:'t_leg_press', name:'Leg Press', sets:3, reps:'10-12', type:'legpress', sub:'Comfortable range', cues:['Set feet shoulder-width.','Lower only to comfortable depth.','Push through heels and midfoot.'], mistakes:['Do not let knees cave inward.','Do not bottom out into pain.','Do not lock knees hard.'], alternatives:['Hack Squat Machine','Box Squat to Bench','TRX Assisted Squat'], tip:'Pain-free range wins. Build strength without picking a fight with the knee.'},
-      {id:'t_rdl_db', name:'Dumbbell Romanian Deadlift', sets:3, reps:'8-10', type:'hinge', sub:'Hamstrings and glutes', cues:['Soft knees, hips move back.','Keep dumbbells close to legs.','Stand tall by squeezing glutes.'], mistakes:['Do not round low back.','Do not squat the movement.'], alternatives:['Smith Machine RDL','Machine Back Extension','Hip Hinge with Light DBs'], tip:'This is a hinge, not a squat. Hips back, chest proud.'},
-      {id:'t_hip_thrust', name:'Machine or Bench Hip Thrust', sets:3, reps:'10-12', type:'glute', sub:'Glute strength', cues:['Brace ribs down.','Drive through heels.','Pause at the top.'], mistakes:['Do not over-arch low back.','Do not let feet get too far away.'], alternatives:['Glute Bridge','Cable Pull-Through if available','Seated Glute Machine'], tip:'Strong glutes help protect the knee and support daily movement.'},
-      {id:'t_leg_curl', name:'Seated Leg Curl', sets:3, reps:'10-12', type:'curl_leg', sub:'Hamstrings', cues:['Set pad above ankles.','Curl smoothly.','Slow return.'], mistakes:['Do not lift hips off seat.','Do not use momentum.'], alternatives:['Lying Leg Curl','Standing Leg Curl','Stability Ball Curl'], tip:'Hamstrings are knee support. Keep these clean and controlled.'},
-      {id:'t_leg_extension', name:'Leg Extension', sets:2, reps:'12-15', type:'extension', sub:'Controlled quad work', cues:['Use light to moderate weight.','Stop short of pain.','Squeeze gently at top.'], mistakes:['Do not kick fast.','Do not force heavy weight.'], alternatives:['Terminal Knee Extension Warm-Up','Short Range Step-Up Supported','Wall Sit Partial Range'], tip:'This should feel controlled, not aggressive.'},
-      {id:'t_calf_raise', name:'Standing Calf Raise Machine', sets:3, reps:'12-15', type:'calf', sub:'Lower leg strength', cues:['Rise tall.','Pause briefly at top.','Lower slowly.'], mistakes:['Do not bounce.','Do not roll ankles outward.'], alternatives:['Seated Calf Raise','Leg Press Calf Raise','Bodyweight Calf Raise with Support'], tip:'One good calf exercise is enough.'}
+  "tuesday": {
+    "title": "Tuesday",
+    "subtitle": "Lower Body - Knee Friendly",
+    "focus": "Leg strength, glutes, and knee-smart movement",
+    "warmup": [
+      "5 minutes treadmill walk",
+      "Sit-to-stand x 10",
+      "Heel raises x 15",
+      "Mini squats x 10 to comfortable depth"
+    ],
+    "cooldown": [
+      "10 minutes treadmill walk or easy row"
+    ],
+    "exercises": [
+      {
+        "id": "leg_press",
+        "name": "Leg Press",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Lower",
+        "tip": "Pain-free range. Do not chase depth.",
+        "mistakes": [
+          "Letting knees cave in",
+          "Going too deep for the knee",
+          "Locking knees hard"
+        ],
+        "alternatives": [
+          "Hack squat machine",
+          "Box squat to bench",
+          "TRX assisted squat"
+        ],
+        "cues": [
+          "Feet shoulder-width",
+          "Knees track over toes",
+          "Move slowly and smoothly"
+        ]
+      },
+      {
+        "id": "db_rdl",
+        "name": "Dumbbell Romanian Deadlift",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Lower",
+        "tip": "Hips back, spine tall, slight knee bend.",
+        "mistakes": [
+          "Rounding the back",
+          "Squatting instead of hinging",
+          "Letting weights drift forward"
+        ],
+        "alternatives": [
+          "Smith machine RDL",
+          "Machine back extension",
+          "Hip hinge with dowel"
+        ],
+        "cues": [
+          "Soft knees",
+          "Push hips back",
+          "Feel hamstrings load"
+        ]
+      },
+      {
+        "id": "hip_thrust",
+        "name": "Machine or Bench Hip Thrust",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Lower",
+        "tip": "Glutes do the work, not the low back.",
+        "mistakes": [
+          "Overarching at top",
+          "Feet too far away",
+          "Rushing reps"
+        ],
+        "alternatives": [
+          "Glute bridge machine",
+          "Floor glute bridge",
+          "Cable pull-through if available"
+        ],
+        "cues": [
+          "Chin tucked",
+          "Drive through heels",
+          "Pause at top"
+        ]
+      },
+      {
+        "id": "seated_leg_curl",
+        "name": "Seated Leg Curl",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Lower",
+        "tip": "Hamstrings support the knee. Control matters.",
+        "mistakes": [
+          "Lifting hips",
+          "Bouncing reps",
+          "Too much weight"
+        ],
+        "alternatives": [
+          "Lying leg curl",
+          "Standing leg curl",
+          "Stability ball curl"
+        ],
+        "cues": [
+          "Back against pad",
+          "Curl smoothly",
+          "Slow return"
+        ]
+      },
+      {
+        "id": "leg_extension",
+        "name": "Leg Extension",
+        "sets": 2,
+        "repRange": "12-15",
+        "type": "Lower",
+        "tip": "Light and controlled. Stop if knee pain rises.",
+        "mistakes": [
+          "Going too heavy",
+          "Snapping into lockout",
+          "Using painful range"
+        ],
+        "alternatives": [
+          "Short arc quad",
+          "Supported sit-to-stand",
+          "Terminal knee extension as warmup only"
+        ],
+        "cues": [
+          "Light load",
+          "Controlled lift",
+          "Use comfortable range"
+        ]
+      },
+      {
+        "id": "calf_raise",
+        "name": "Standing or Seated Calf Raise",
+        "sets": 3,
+        "repRange": "12-15",
+        "type": "Accessory",
+        "tip": "Full stretch and full squeeze.",
+        "mistakes": [
+          "Bouncing",
+          "Rushing",
+          "Partial reps"
+        ],
+        "alternatives": [
+          "Leg press calf raise",
+          "Seated calf raise",
+          "Bodyweight calf raise"
+        ],
+        "cues": [
+          "Pause at top",
+          "Lower slowly",
+          "Hold support if standing"
+        ]
+      }
     ]
   },
-  wednesday: {
-    label: 'Wednesday', title: 'Recovery & Mobility', subtitle: 'Optional easy movement day', theme: 'Recovery', recovery:true,
-    warmup: ['Easy walk to get moving'], cooldown: ['Done when she feels better than when she started'],
-    exercises: [
-      {id:'w_treadmill', name:'Treadmill Walk', sets:1, reps:'15-25 min', type:'walk', sub:'Easy pace', cues:['Keep it conversational.','No incline required.','Stop if knee complains.'], mistakes:['Do not turn recovery into a workout.'], alternatives:['Concept2 Row Easy','Bike Easy','Outdoor Walk'], tip:'Recovery work should leave you feeling better.'},
-      {id:'w_rower', name:'Concept2 Row - Easy', sets:1, reps:'8-15 min', type:'rower', sub:'Optional', cues:['Easy pace.','Smooth pull.','No sprinting.'], mistakes:['Do not yank with low back.'], alternatives:['Treadmill Walk','Recumbent Bike'], tip:'Easy rowing is a tool, not a test.'}
+  "thursday": {
+    "title": "Thursday",
+    "subtitle": "Full Body",
+    "focus": "Balanced strength and endurance",
+    "warmup": [
+      "5 minutes treadmill walk or easy row",
+      "Light leg press x 10",
+      "Light chest press x 10",
+      "Easy row x 10"
+    ],
+    "cooldown": [
+      "10-15 minutes treadmill walk or Concept2 row"
+    ],
+    "exercises": [
+      {
+        "id": "hack_squat_or_leg_press",
+        "name": "Hack Squat Machine or Leg Press",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Lower",
+        "tip": "Choose the machine that feels best on the knee.",
+        "mistakes": [
+          "Going too deep",
+          "Knees caving in",
+          "Rushing reps"
+        ],
+        "alternatives": [
+          "Box squat",
+          "TRX assisted squat",
+          "Leg press"
+        ],
+        "cues": [
+          "Controlled depth",
+          "Push through full foot",
+          "Stay pain-free"
+        ]
+      },
+      {
+        "id": "machine_chest_press",
+        "name": "Machine Chest Press",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Stable machine work builds confidence.",
+        "mistakes": [
+          "Shoulders forward",
+          "Uneven press",
+          "Bouncing"
+        ],
+        "alternatives": [
+          "Plate-loaded chest press",
+          "Incline chest press",
+          "Dumbbell bench"
+        ],
+        "cues": [
+          "Chest tall",
+          "Press evenly",
+          "Slow return"
+        ]
+      },
+      {
+        "id": "machine_row",
+        "name": "Machine Row",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Posture first, load second.",
+        "mistakes": [
+          "Shrugging",
+          "Using momentum",
+          "Short reps"
+        ],
+        "alternatives": [
+          "Chest-supported row",
+          "Seated cable row",
+          "One-arm dumbbell row"
+        ],
+        "cues": [
+          "Elbows back",
+          "Squeeze shoulder blades",
+          "Lower slowly"
+        ]
+      },
+      {
+        "id": "seated_leg_curl_thu",
+        "name": "Seated Leg Curl",
+        "sets": 2,
+        "repRange": "12-15",
+        "type": "Lower",
+        "tip": "A little extra hamstring work supports the knee.",
+        "mistakes": [
+          "Too heavy",
+          "Fast reps",
+          "Hips lifting"
+        ],
+        "alternatives": [
+          "Lying curl",
+          "Standing curl",
+          "Light RDL"
+        ],
+        "cues": [
+          "Smooth curl",
+          "Pause briefly",
+          "Slow return"
+        ]
+      },
+      {
+        "id": "lat_pulldown_thu",
+        "name": "Lat Pulldown",
+        "sets": 2,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Keep ribs down and chest tall.",
+        "mistakes": [
+          "Swinging",
+          "Pulling behind neck",
+          "Shrugging"
+        ],
+        "alternatives": [
+          "Assisted pullup",
+          "High row machine",
+          "Neutral pulldown"
+        ],
+        "cues": [
+          "Elbows down",
+          "Upper chest target",
+          "Controlled return"
+        ]
+      }
     ]
   },
-  thursday: {
-    label: 'Thursday', title: 'Full Body', subtitle: 'Stable machines and practical strength', theme: 'Full',
-    warmup: ['5 minutes treadmill or rower', 'Easy machine warm-up set for first lower and upper movement'], cooldown: ['10 minutes treadmill walk or Concept2 row'],
-    exercises: [
-      {id:'th_hack_or_legpress', name:'Hack Squat or Leg Press', sets:3, reps:'8-12', type:'legpress', sub:'Pick knee-friendly option', cues:['Use the option that feels best.','Control depth.','Drive through midfoot.'], mistakes:['Do not chase depth at the expense of knee comfort.'], alternatives:['Leg Press','Hack Squat','Box Squat to Bench'], tip:'Stable lower-body work supports strength without unnecessary risk.'},
-      {id:'th_machine_row', name:'Machine Row', sets:3, reps:'10-12', type:'row', sub:'Back and posture', cues:['Sit tall.','Pull elbows back.','Pause at squeeze.'], mistakes:['Do not shrug.','Do not round forward.'], alternatives:['Chest-Supported Row','Cable Row','One-Arm DB Row'], tip:'Own the squeeze and control the return.'},
-      {id:'th_incline_press', name:'Incline Machine Press', sets:3, reps:'8-12', type:'press', sub:'Chest and shoulders', cues:['Keep shoulder blades set.','Press up and slightly forward.','Lower slowly.'], mistakes:['Do not flare elbows hard.','Do not bounce.'], alternatives:['Machine Chest Press','Dumbbell Incline Press','Smith Incline Press'], tip:'A little incline gives strong carryover without overcomplicating it.'},
-      {id:'th_leg_curl', name:'Seated Leg Curl', sets:2, reps:'10-12', type:'curl_leg', sub:'Hamstring support', cues:['Curl smooth.','Pause briefly.','Return slow.'], mistakes:['Do not use momentum.'], alternatives:['Lying Leg Curl','Standing Leg Curl'], tip:'Hamstrings help keep the knee supported.'},
-      {id:'th_lat_pulldown', name:'Lat Pulldown', sets:2, reps:'10-12', type:'pulldown', sub:'Upper back', cues:['Pull to upper chest.','Control the top.','Keep ribs down.'], mistakes:['Do not pull behind neck.'], alternatives:['Assisted Pull-Up','Machine High Row'], tip:'Think strong back, tall posture.'},
-      {id:'th_farmer_carry', name:'Farmer Carry', sets:3, reps:'30-45 sec', type:'carry', sub:'Grip and total body', cues:['Stand tall.','Walk slowly.','Use clear path.'], mistakes:['Do not rush.','Do not lean side to side.'], alternatives:['Suitcase Carry','Static DB Hold','Trap Bar Carry'], tip:'This is simple and powerful. Tall posture the whole way.'}
-    ]
-  },
-  friday: {
-    label: 'Friday', title: 'Accessory & Finishers', subtitle: 'Chest, arms, shoulders, calves, and posture', theme: 'Accessory',
-    warmup: ['5 minutes treadmill walk', 'Shoulder circles x 10 each way', 'Light band pull-aparts x 12'], cooldown: ['10 minutes treadmill walk or Concept2 row'],
-    exercises: [
-      {id:'f_incline_chest_press', name:'Incline Plate-Loaded Chest Press', sets:3, reps:'10-12', type:'press', sub:'Extra chest volume', cues:['Set seat to comfortable range.','Press smoothly.','Stop short of shoulder discomfort.'], mistakes:['Do not bounce.','Do not let elbows flare too wide.'], alternatives:['Machine Chest Press','Dumbbell Incline Press','Smith Incline Press'], tip:'This is extra chest work, not a max effort lift.'},
-      {id:'f_lawnmower_row', name:'Single-Arm Dumbbell Row - Lawnmower Starts', sets:3, reps:'10-12 / side', type:'row', sub:'Supported row', cues:['Use bench support.','Pull elbow toward hip.','Lower with control.'], mistakes:['Do not twist aggressively.','Do not yank the dumbbell.'], alternatives:['Chest-Supported Row','Machine Row','Seated Cable Row'], tip:'Use the support. The goal is strong back, not a balance challenge.'},
-      {id:'f_lateral_raise', name:'Machine Lateral Raise', sets:3, reps:'12-15', type:'shoulder', sub:'Side delts', cues:['Start light.','Raise to comfortable height.','Lower slowly.'], mistakes:['Do not shrug.','Do not swing.'], alternatives:['Seated Dumbbell Lateral Raise','Cable Lateral Raise if available'], tip:'Light and clean beats heavy and sloppy here.'},
-      {id:'f_biceps', name:'Machine or Cable Biceps Curl', sets:3, reps:'10-12', type:'curl', sub:'Arms', cues:['Keep elbows still.','Curl smoothly.','Lower under control.'], mistakes:['Do not rock torso.','Do not rush.'], alternatives:['Dumbbell Curl','EZ-Bar Curl'], tip:'Control the negative. That is where strength is built.'},
-      {id:'f_triceps', name:'Rope Triceps Pressdown', sets:3, reps:'10-12', type:'triceps', sub:'Arms', cues:['Elbows tucked.','Press down.','Separate rope at bottom.'], mistakes:['Do not lean on rope.','Do not flare elbows.'], alternatives:['Machine Triceps Extension','Band Pressdown'], tip:'Elbows stay pinned. Smooth reps.'},
-      {id:'f_calf_raise', name:'Standing Calf Raise Machine', sets:3, reps:'15-20', type:'calf', sub:'One calf movement', cues:['Rise tall.','Pause.','Lower slow.'], mistakes:['Do not bounce.'], alternatives:['Seated Calf Raise','Leg Press Calf Raise'], tip:'One calf movement, done well, is enough.'}
+  "friday": {
+    "title": "Friday",
+    "subtitle": "Accessory and Finisher",
+    "focus": "Chest, shoulders, arms, calves, and posture",
+    "warmup": [
+      "5 minutes treadmill walk",
+      "Shoulder circles x 10",
+      "Band pull-aparts or light reverse fly x 12",
+      "Light chest press x 10"
+    ],
+    "cooldown": [
+      "10 minutes treadmill walk or Concept2 row"
+    ],
+    "exercises": [
+      {
+        "id": "incline_chest_press",
+        "name": "Incline Plate-Loaded Chest Press",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Upper",
+        "tip": "Great second chest day without overcomplicating it.",
+        "mistakes": [
+          "Seat too low",
+          "Elbows flared too high",
+          "Rushing the negative"
+        ],
+        "alternatives": [
+          "Machine chest press",
+          "Dumbbell incline press",
+          "Smith incline press"
+        ],
+        "cues": [
+          "Handles at upper chest",
+          "Press up and slightly in",
+          "Lower slow"
+        ]
+      },
+      {
+        "id": "lawnmower_rows",
+        "name": "Single-Arm Dumbbell Row - Lawnmower Starts",
+        "sets": 3,
+        "repRange": "10-12 each side",
+        "type": "Upper",
+        "tip": "Use the bench for support. Stable beats fancy.",
+        "mistakes": [
+          "Twisting too much",
+          "Yanking the dumbbell",
+          "Rounding back"
+        ],
+        "alternatives": [
+          "Chest-supported row",
+          "Machine row",
+          "Seated row"
+        ],
+        "cues": [
+          "One hand on bench",
+          "Pull elbow toward hip",
+          "Control the lower"
+        ]
+      },
+      {
+        "id": "machine_lateral_raise",
+        "name": "Machine Lateral Raise",
+        "sets": 3,
+        "repRange": "12-15",
+        "type": "Accessory",
+        "tip": "Keep it light and smooth for shoulder health.",
+        "mistakes": [
+          "Shrugging",
+          "Going too heavy",
+          "Swinging"
+        ],
+        "alternatives": [
+          "Seated dumbbell lateral raise",
+          "Cable lateral raise",
+          "Lean-away raise"
+        ],
+        "cues": [
+          "Lead with elbows",
+          "Stop at shoulder height",
+          "Slow return"
+        ]
+      },
+      {
+        "id": "machine_biceps_curl_fri",
+        "name": "Machine or Cable Biceps Curl",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Accessory",
+        "tip": "Controlled curls protect the elbows and build the arms.",
+        "mistakes": [
+          "Swinging",
+          "Rushing",
+          "Short reps"
+        ],
+        "alternatives": [
+          "Dumbbell curl",
+          "EZ-bar curl",
+          "Hammer curl"
+        ],
+        "cues": [
+          "Elbows steady",
+          "Curl fully",
+          "Lower slowly"
+        ]
+      },
+      {
+        "id": "rope_pressdown_fri",
+        "name": "Rope Triceps Pressdown",
+        "sets": 3,
+        "repRange": "10-12",
+        "type": "Accessory",
+        "tip": "Finish strong, elbows still.",
+        "mistakes": [
+          "Shoulders moving",
+          "Too much body lean",
+          "Snapping elbows"
+        ],
+        "alternatives": [
+          "Machine triceps press",
+          "Cable bar pressdown",
+          "Bench dip only if shoulders tolerate"
+        ],
+        "cues": [
+          "Elbows tucked",
+          "Separate rope at bottom",
+          "Slow return"
+        ]
+      },
+      {
+        "id": "calf_raise_fri",
+        "name": "Standing Calf Raise Machine",
+        "sets": 3,
+        "repRange": "12-15",
+        "type": "Accessory",
+        "tip": "One calf movement is enough. Make it count.",
+        "mistakes": [
+          "Bouncing",
+          "Half reps",
+          "No pause"
+        ],
+        "alternatives": [
+          "Seated calf raise",
+          "Leg press calf raise",
+          "Bodyweight calf raise"
+        ],
+        "cues": [
+          "Pause high",
+          "Deep stretch",
+          "Controlled tempo"
+        ]
+      }
     ]
   }
-};
+}
